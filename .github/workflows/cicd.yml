@@ -9,11 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    # runs-on: ${{matrix.os}}
+
+    # If using a matrix strategy, uncomment the lines below:
     # strategy:
     #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macOs-latest]
+    #     os: [ubuntu-latest, windows-latest, macos-latest]
+
     # permissions:
     #   contents: read
 
