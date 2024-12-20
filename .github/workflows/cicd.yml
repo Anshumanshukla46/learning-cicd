@@ -1,4 +1,4 @@
-name: Build with Gradle
+name: Java CI with Gradle
 
 on:
   push:
@@ -7,35 +7,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-java:
 
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOs-latest]
-
-    # permissions:
-    #   contents: read
-
+    runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - uses: actions/checkout@v2
 
-      - name: permissions to use gradlew
-        run: chmod +x gradlew
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
 
-      - name: Build with Gradle
-        run: ./gradlew build
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
 
-    name: Build & push Docker image
-    - uses: mr-smithers-excellent/docker-build-push@v6
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v4
       with:
         image: anshumanshukla46/cicd-check
         registry: docker.io
-        dockerfile: Dockerfile.ci
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}    
+        password: ${{ secrets.DOCKER_PASSWORD }}
+         
