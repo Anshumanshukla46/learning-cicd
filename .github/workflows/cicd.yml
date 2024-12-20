@@ -8,13 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOs-latest]
-
+    # runs-on: ${{matrix.os}}
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest, windows-latest, macOs-latest]
     # permissions:
     #   contents: read
+
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -30,4 +31,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-
+    name: Build & push Docker image
+    - uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: anshumanshukla46/cicd-check
+        registry: docker.io
+        dockerfile: Dockerfile.ci
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}    
