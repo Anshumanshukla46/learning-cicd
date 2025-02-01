@@ -6,7 +6,7 @@ on:
   pull_request: # pull_request: Runs when a PR is created or updated.
     branches: [ main ]
   pull_request_target: # pull_request_target: Runs when a PR is merged into main (not just created).
-    branches: [main]  
+    branches: [main]
 
 jobs:
   build-java:
