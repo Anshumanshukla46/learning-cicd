@@ -33,6 +33,8 @@ jobs:
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
-        run: |
-          docker build -t anshumanshukla46/cicd-check .
-          docker push anshumanshukla46/cicd-check
+        with:
+          context: .
+          push: true
+          tags: anshumanshukla46/cicd-check:latest
+          
