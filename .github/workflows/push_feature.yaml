@@ -1,0 +1,28 @@
+name: Build after each push to any branch
+
+on:
+  push:
+    branches:
+      - "**"  # Runs on push to any branch
+  pull_request:
+    branches:
+      - "**"  # Runs on PR to any branch
+
+jobs:
+  build-java:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
